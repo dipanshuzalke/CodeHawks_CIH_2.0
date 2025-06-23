@@ -26,7 +26,7 @@ const Feedback = async ({ params }: { params: Promise<{ id: string }> }) => {
         </h1>
       </div>
 
-      <div className="flex flex-row justify-center ">
+      <div className="flex flex-row justify-center mt-3 ">
         <div className="flex flex-row gap-5">
           {/* Overall Impression */}
           <div className="flex flex-row gap-2 items-center">
@@ -41,7 +41,7 @@ const Feedback = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
 
           {/* Date */}
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-row gap-2 ">
             <Image src="/calendar.svg" width={22} height={22} alt="calendar" />
             <p>
               {feedback?.createdAt
@@ -54,11 +54,12 @@ const Feedback = async ({ params }: { params: Promise<{ id: string }> }) => {
 
       <hr />
 
-      <p>{feedback?.finalAssessment}</p>
+      <div className="mx-auto max-w-6xl py-4">
+        <p>{feedback?.finalAssessment}</p>
 
       {/* Interview Breakdown */}
-      <div className="flex flex-col gap-4">
-        <h2>Breakdown of the Interview:</h2>
+      <div className="flex flex-col gap-4 mt-3">
+        <h2 className="text-3xl">Breakdown of the Interview:</h2>
         {feedback?.categoryScores?.map((category: { name: string; score: number; comment: string }, index: number) => (
           <div key={index}>
             <p className="font-bold">
@@ -69,8 +70,8 @@ const Feedback = async ({ params }: { params: Promise<{ id: string }> }) => {
         ))}
       </div>
 
-      <div className="flex flex-col gap-3">
-        <h3>Strengths</h3>
+      <div className="flex flex-col gap-3 mt-4">
+        <h3 className="text-3xl">Strengths</h3>
         <ul>
           {feedback?.strengths?.map((strength: string, index: number) => (
             <li key={index}>{strength}</li>
@@ -78,17 +79,17 @@ const Feedback = async ({ params }: { params: Promise<{ id: string }> }) => {
         </ul>
       </div>
 
-      <div className="flex flex-col gap-3">
-        <h3>Areas for Improvement</h3>
+      <div className="flex flex-col gap-3 mt-3">
+        <h3 className="text-3xl">Areas for Improvement</h3>
         <ul>
           {feedback?.areasForImprovement?.map((area: string, index: number) => (
-            <li key={index}>{area}</li>
+            <li key={index} className="mt-1">{area}</li>
           ))}
         </ul>
       </div>
 
-      <div className="buttons">
-        <Button className="btn-secondary flex-1">
+      <div className="buttons py-6 flex gap-4">
+        <Button className="btn-secondary">
           <Link href="/phases/interview-prep" className="flex w-full justify-center">
             <p className="text-sm font-semibold text-primary-200 text-center">
               Back to dashboard
@@ -96,7 +97,7 @@ const Feedback = async ({ params }: { params: Promise<{ id: string }> }) => {
           </Link>
         </Button>
 
-        <Button className="btn-primary flex-1">
+        <Button className="btn-primary">
           <Link
             href={`/interview-prep/generate-interview/${id}`}
             className="flex w-full justify-center"
@@ -106,6 +107,7 @@ const Feedback = async ({ params }: { params: Promise<{ id: string }> }) => {
             </p>
           </Link>
         </Button>
+      </div>
       </div>
     </section>
   );
