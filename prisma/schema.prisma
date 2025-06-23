@@ -1,0 +1,162 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum MediaType {
+  image
+  video
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  messages      Message[]
+
+  posts      CommunityPost[]    @relation("UserPosts")
+  likedPosts CommunityPost[]    @relation("PostLikes")
+  comments   CommunityComment[]
+
+  aiRoadmaps   AiRoadmapInput[]
+  aiInterviews AiInterview[]
+}
+
+model Account {
+  id                String  @id @default(uuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  userName  String?
+}
+
+model CommunityPost {
+  id        String   @id @default(uuid())
+  message   String
+  createdAt DateTime @default(now())
+
+  sender   User   @relation("UserPosts", fields: [senderId], references: [id])
+  senderId String
+
+  likes    User[]             @relation("PostLikes")
+  comments CommunityComment[]
+  media    Media[]
+}
+
+model CommunityComment {
+  id        String   @id @default(uuid())
+  message   String
+  createdAt DateTime @default(now())
+
+  post   CommunityPost @relation(fields: [postId], references: [id])
+  postId String
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+}
+
+model Media {
+  id   String    @id @default(uuid())
+  url  String
+  type MediaType
+
+  post   CommunityPost @relation(fields: [postId], references: [id])
+  postId String
+}
+
+model AiRoadmapInput {
+  id                     String   @id @default(uuid())
+  goal                   String
+  skillLevel             String
+  months                 Int
+  dailyHours             Int
+  targetCompaniesOrRoles String? // Optional field
+  createdAt              DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Doubt {
+  id        String   @id @default(uuid())
+  username  String
+  title     String
+  question  String
+  tags      String[]
+  image_url String?
+  resolved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model DoubtResponse {
+  id         String   @id @default(uuid())
+  type       String // 'user_response'
+  doubt_id   String
+  username   String
+  response   String?
+  image_url  String?
+  created_at DateTime @default(now())
+}
+
+model AiInterview {
+  id        String              @id @default(uuid())
+  role      String
+  level     String
+  questions String[] // Array of questions
+  techstack String[] // Array of tech stack items
+  createdAt DateTime            @default(now())
+  user      User                @relation(fields: [userId], references: [id])
+  userId    String
+  type      String
+  finalized Boolean             @default(false)
+  feedbacks InterviewFeedback[]
+}
+
+model InterviewFeedback {
+  id                  String      @id @default(uuid())
+  interview           AiInterview @relation(fields: [interviewId], references: [id])
+  interviewId         String
+  totalScore          Int
+  categoryScores      Json
+  strengths           String[]
+  areasForImprovement String[]
+  finalAssessment     String
+  createdAt           DateTime    @default(now())
+}
