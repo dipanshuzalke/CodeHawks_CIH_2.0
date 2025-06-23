@@ -9,6 +9,7 @@ interface Message {
   role: "user" | "assistant";
 }
 
+
 export default function AssistantPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -67,6 +68,7 @@ export default function AssistantPage() {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="flex h-[calc(100vh-4rem)] max-w-[50%] border-1 border-gray-850 rounded-2xl m-10 mx-auto flex-col">
