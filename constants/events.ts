@@ -26,4 +26,5 @@ export const events = [
     attendees: 18,
     tags: ["Career", "Resume"],
   },
+  
 ];
