@@ -27,7 +27,7 @@ An AI-powered platform designed to guide college students from their **first yea
 ## 🛠 Tech Stack
 
 * **Frontend**: Next.js, Tailwind CSS, shadcn/ui
-* **Backend**: Node.js, Express (optional), MongoDB
+* **Backend**: Typescript
 * **Auth**: NextAuth
 * **Real-time**: WebSockets for chat & notifications
 * **AI**: OpenAI GPT API
@@ -49,18 +49,6 @@ Then start the dev server:
 ```bash
 npm run dev
 ```
-
----
-
-## 📌 Project Status
-
-✅ Analytics & Streak Tracker
-✅ AI Doubt Forum
-✅ AI Roadmap Generator
-✅ AI Interviewer with Cheating Detection
-✅ Project & DSA Sections
-🔜 Mentor Marketplace
-🔜 Resume Analyzer
 
 ---
 
