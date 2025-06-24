@@ -62,4 +62,5 @@ export const domains = [
     color: "from-sky-500 to-indigo-500",
     path: "/phases/domains/cloud",
   },
+  
 ];
