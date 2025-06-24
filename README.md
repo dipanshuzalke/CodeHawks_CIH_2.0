@@ -1,7 +1,3 @@
-Here’s your **updated short README file** with the two additional features:
-
----
-
 # 🚀 Student Career Companion – Full Stack Learning Platform
 
 An AI-powered platform designed to guide college students from their **first year to final year** with personalized roadmaps, hands-on projects, DSA mastery, AI interview preparation, and a supportive learning community.
