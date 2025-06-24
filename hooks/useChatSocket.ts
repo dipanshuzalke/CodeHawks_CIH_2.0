@@ -56,6 +56,6 @@ export function useChatSocket(user: {
     socket?.send(message);
   };
 
-  
+
   return { messages, sendMessage };
 }
